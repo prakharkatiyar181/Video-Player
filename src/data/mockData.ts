@@ -267,3 +267,13 @@ export const DATASET: RootData = {
 export const getAllVideos = (): Video[] => {
     return DATASET.categories.flatMap(cat => cat.contents);
 };
+
+export const getRelatedVideos = (currentSlug: string): Video[] => {
+    const category = DATASET.categories.find(cat =>
+        cat.contents.some(video => video.slug === currentSlug)
+    );
+
+    if (!category) return [];
+
+    return category.contents.filter(video => video.slug !== currentSlug);
+};
