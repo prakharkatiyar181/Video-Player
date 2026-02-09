@@ -1,4 +1,4 @@
-import { RootData, Video } from '../types';
+import type { RootData, Video } from '../types';
 
 export const DATASET: RootData = {
     "categories": [

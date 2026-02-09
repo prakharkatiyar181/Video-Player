@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Video } from '../types';
+import type { Video } from '../types';
 
 interface PlayerContextType {
     activeVideo: Video | null;

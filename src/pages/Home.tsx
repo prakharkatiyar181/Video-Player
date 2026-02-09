@@ -1,17 +1,9 @@
 import React from 'react';
 import { DATASET } from '../data/mockData';
 import { VideoCard } from '../components/VideoCard';
-import { PlayCircle } from 'lucide-react';
-
 export const Home: React.FC = () => {
     return (
-        <div className="min-h-screen pb-24 pt-4 px-4 md:px-8 max-w-7xl mx-auto">
-            <header className="mb-6 flex items-center gap-3">
-                <PlayCircle className="h-8 w-8 text-blue-500" />
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                    Discover
-                </h1>
-            </header>
+        <div className="min-h-screen pt-4 px-4 md:px-8 max-w-7xl mx-auto">
 
             <div className="space-y-8">
                 {DATASET.categories.map((categoryData) => (

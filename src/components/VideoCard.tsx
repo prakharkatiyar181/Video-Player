@@ -17,7 +17,7 @@ export const VideoCard: React.FC<VideoCardProps> = ({ video, compact = false }) 
             onClick={() => playVideo(video)}
         >
             {/* Thumbnail Container */}
-            <div className={`relative shrink-0 overflow-hidden ${compact ? 'h-20 w-36 rounded-lg' : 'aspect-video w-full rounded-xl'}`}>
+            <div className={`relative shrink-0 overflow-hidden ${compact ? 'h-20 w-36 rounded-lg' : 'aspect-video w-full rounded-t-xl'}`}>
                 <img
                     src={video.thumbnailUrl}
                     alt={video.title}
