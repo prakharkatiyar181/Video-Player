@@ -3,7 +3,7 @@ import { motion, useMotionValue, useTransform, useAnimation, type PanInfo } from
 import { usePlayer } from '../../context/PlayerContext';
 import { PlayerControls } from './PlayerControls';
 import { RelatedVideos } from './RelatedVideos';
-import { getAllVideos, getRelatedVideos } from '../../data/mockData';
+import { getRelatedVideos } from '../../data/mockData';
 import { X, Play, Pause, Minimize2 } from 'lucide-react';
 
 export const VideoPlayerOverlay: React.FC = () => {
@@ -22,13 +22,24 @@ export const VideoPlayerOverlay: React.FC = () => {
 
     useEffect(() => {
         if (activeVideo && videoRef.current) {
+            if (progress > 0 && Math.abs(videoRef.current.currentTime - progress) > 1) {
+                videoRef.current.currentTime = progress;
+            }
+
             if (isPlaying) {
                 videoRef.current.play().catch(() => { });
             } else {
                 videoRef.current.pause();
             }
         }
-    }, [activeVideo, isPlaying]);
+    }, [activeVideo, isPlaying, isMinimized]);
+
+    useEffect(() => {
+        // Reset controls when entering full screen
+        if (!isMinimized) {
+            controlsControls.start({ y: 0, opacity: 1, scale: 1 });
+        }
+    }, [isMinimized, controlsControls]);
 
     if (!activeVideo) return null;
 
@@ -36,7 +47,7 @@ export const VideoPlayerOverlay: React.FC = () => {
         if (info.offset.y > 150 || info.velocity.y > 500) {
             minimizePlayer();
         } else {
-            controlsControls.start({ y: 0 });
+            controlsControls.start({ y: 0, opacity: 1, scale: 1 });
         }
     };
 
@@ -120,14 +131,14 @@ export const VideoPlayerOverlay: React.FC = () => {
     return (
         <motion.div
             initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            animate={controlsControls}
+            style={{ y, scale, opacity }}
             drag="y"
             dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={{ top: 0, bottom: 1 }}
+            dragElastic={{ bottom: 0.5, top: 0 }}
             onDragEnd={handleDragEnd}
-            style={{ y, opacity, scale }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed inset-0 z-50 flex flex-col bg-black"
         >
             {/* Draggable Handle for Mobile cues */}

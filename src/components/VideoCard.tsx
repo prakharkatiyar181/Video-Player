@@ -5,9 +5,10 @@ import { usePlayer } from '../context/PlayerContext';
 interface VideoCardProps {
     video: Video;
     compact?: boolean;
+    category?: string;
 }
 
-export const VideoCard: React.FC<VideoCardProps> = ({ video, compact = false }) => {
+export const VideoCard: React.FC<VideoCardProps> = ({ video, compact = false, category }) => {
     const { playVideo, activeVideo } = usePlayer();
     const isActive = activeVideo?.slug === video.slug;
 
@@ -41,11 +42,14 @@ export const VideoCard: React.FC<VideoCardProps> = ({ video, compact = false }) 
                 <h3 className={`font-semibold text-white line-clamp-2 ${compact ? 'text-sm' : 'text-base'} ${isActive ? 'text-blue-400' : ''}`}>
                     {video.title}
                 </h3>
-                {!compact && (
-                    <div className="mt-1 flex items-center gap-2 text-xs text-gray-400">
-                        <span>Video • {video.mediaType}</span>
-                    </div>
-                )}
+                <div className="mt-1 flex items-center gap-2 text-xs text-gray-400">
+                    {/* {!compact && <span>Video</span>} */}
+                    {category && (
+                        <span className="rounded-full bg-gray-800 px-2 py-0.5 text-[10px] font-medium text-gray-300">
+                            {category}
+                        </span>
+                    )}
+                </div>
             </div>
         </div>
     );

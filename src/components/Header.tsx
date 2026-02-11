@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayCircle, Search, Bell, User } from 'lucide-react';
+import { PlayCircle, Search, Bell } from 'lucide-react';
 
 export const Header: React.FC = () => {
     return (
